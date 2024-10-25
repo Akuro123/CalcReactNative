@@ -1,32 +1,57 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-interface ButtonProps {
-    title: string;
-    onPress: () => void;
+interface ButtonProperties {
+    label: string;
+    action: () => void;
+    isOperator?: boolean;
+    isReset?: boolean;
 }
 
-function Button({ title, onPress }: ButtonProps) {
+export default function Button({ label, action, isOperator, isReset }: ButtonProperties) {
     return (
-        <TouchableOpacity style={buttonTheme.button} onPress={onPress}>
-            <Text style={buttonTheme.text}>{title}</Text>
+        <TouchableOpacity
+            style={[
+                isOperator ? buttonStyles.operatorButton : isReset ? buttonStyles.resetButton : buttonStyles.numberButton,
+                label === "0" ? buttonStyles.zeroButton : ""
+            ]}
+            onPress={action}
+        >
+            <Text style={buttonStyles.textStyle}>{label}</Text>
         </TouchableOpacity>
     );
 }
 
-const buttonTheme = StyleSheet.create({
-    button: {
-        backgroundColor: '#7c7d7f', 
-        width: 100, 
-        height: 50, 
+const buttonStyles = StyleSheet.create({
+    operatorButton: {
+        backgroundColor: '#f39c12',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 5,
+        flex: 1,
+        marginBottom: 2,
     },
-    text: {
+    numberButton: {
+        backgroundColor: '#7c7d7f',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        marginRight: 2,
+        marginBottom: 2,
+    },
+    resetButton: {
+        backgroundColor: '#7c7d7f',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        marginRight: 2,
+        marginBottom: 2,
+    },
+    textStyle: {
         color: 'white',
-        fontSize: 16,
-    }
+        fontSize: 48,
+        padding: 10,
+    },
+    zeroButton: {
+        flex: 2,
+    },
 });
-
-export default Button;
