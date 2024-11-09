@@ -6,14 +6,18 @@ interface ButtonProperties {
     action: () => void;
     isOperator?: boolean;
     isReset?: boolean;
+    customStyle?: object; 
+    fontSize?: number;
 }
 
-export default function Button({ label, action, isOperator, isReset }: ButtonProperties) {
+export default function Button({ label, action, isOperator, isReset, customStyle }: ButtonProperties) {
     return (
         <TouchableOpacity
             style={[
+               
                 isOperator ? buttonStyles.operatorButton : isReset ? buttonStyles.resetButton : buttonStyles.numberButton,
-                label === "0" ? buttonStyles.zeroButton : ""
+                label === "0" ? buttonStyles.zeroButton : "",
+                customStyle,  
             ]}
             onPress={action}
         >
@@ -48,10 +52,11 @@ const buttonStyles = StyleSheet.create({
     },
     textStyle: {
         color: 'white',
-        fontSize: 48,
+        fontSize:20, 
         padding: 10,
     },
     zeroButton: {
         flex: 2,
     },
 });
+
